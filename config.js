@@ -1,106 +1,81 @@
-/**
- * ✨ EDIT THIS FILE to customize the birthday greeting! ✨
- *
- * This is the ONLY file you need to modify.
- * No need to touch HTML, CSS, or any other JavaScript files.
- *
- * AVAILABLE SECTION TYPES:
- *   "greeting"      → Opening greeting with recipient's name
- *   "announcement"  → Birthday announcement text
- *   "chatbox"       → Chat message with typing animation
- *   "ideas"         → Sequential text reveals, one by one
- *   "quote"         → Styled quote card with optional author
- *   "countdown"     → Animated 3-2-1 countdown
- *   "stars"         → Twinkling stars background
- *   "fireworks"     → Colorful firework sparks burst
- *   "balloons"      → Floating balloon animation
- *   "profile"       → Profile photo with birthday wish
- *   "confetti"      → Confetti burst animation
- *   "closing"       → Closing message with replay button
- *
- * HOW TO USE:
- *   REMOVE a section  → Delete its object from the sections array
- *   DUPLICATE          → Copy-paste any section object
- *   REORDER            → Move the section object up/down in the array
- *   EDIT TEXT          → Change the string values
- */
-
 const CONFIG = {
-  // ── Recipient Info ────────────────────────────────────────────
-  name: "Irene",
-  photo: "./img/irene.jpg",       // Place your photo in the img/ folder
-  music: "./music/hbd.mpeg",      // Place your music in the music/ folder
+  // 昵称、图片和音乐
+  name: "溜溜",
+  photos: [
+  "./img/1.jpg",
+  "./img/2.jpg",
+  "./img/3.jpg",
+  "./img/4.jpg",
+  "./img/5.jpg",
+  "./img/6.jpg",
+  "./img/7.jpg",
+  "./img/0.jpg",
+],
+  music: "./music/hbd.mpeg",
 
-  // ── Theme Colors ──────────────────────────────────────────────
-  // A toggle button lets the viewer switch between dark & light mode.
+  // 白金色主题
   colors: {
-    primary: "#f472b6",           // Main accent color (rose pink)
-    accent: "#60a5fa",            // Secondary accent color (sky blue)
+    primary: "#b58a32",
+    accent: "#5266b8",
     dark: {
-      background: "#0f172a",      // Slate 900
-      text: "#f1f5f9",            // Slate 100
+      background: "#111827",
+      text: "#f8fafc",
     },
     light: {
-      background: "#fafaf9",      // Stone 50
-      text: "#1e293b",            // Slate 800
+      background: "#faf8f2",
+      text: "#20283c",
     },
   },
 
-  // ── Default Color Mode ────────────────────────────────────────
-  // Options: "dark" or "light"
-  defaultMode: "dark",
+  defaultMode: "light",
 
-  // ── Sections ──────────────────────────────────────────────────
-  // Add, remove, duplicate, or reorder as you wish!
   sections: [
     {
       type: "greeting",
-      title: "Hi",
-      subtitle: "I really like your name btw!",
+      title: "生日快乐",
+      subtitle: "皇马球迷 · 山大学子 · 峡谷召唤师",
     },
     {
       type: "countdown",
-      from: 3,                    // Countdown from this number
-      goText: "🎉",              // Text shown after countdown ends
+      from: 3,
+      goText: "开场！⚽",
     },
     {
       type: "announcement",
-      text: "It's your birthday!! :D",
+      text: "溜溜的生日特别赛季，正式开始！",
     },
     {
       type: "chatbox",
       message:
-        "Happy birthday to youu!! Wishing you a wonderful year ahead filled with joy, love, and endless happiness!",
-      buttonText: "Send",
+        "生日快乐，兄弟！祝你新的一岁，看球开心，排位顺利，学习有收获，生活有盼头。",
+      buttonText: "发送祝福",
     },
     {
       type: "ideas",
       lines: [
-        "That's what I was going to do.",
-        "But then I stopped.",
-        "I realised, I wanted to do something <strong>special</strong>.",
-        "Because,",
-        "You are Special <span>:)</span>",
+        "本来，发一句生日快乐就完事了。",
+        "但仔细一想……",
+        "皇马球迷的生日，必须有点<strong>主场气氛</strong>。",
+        "山大学子的生日，也得<strong>理论联系实际</strong>。",
+        "所以今天的主要任务是：<span>吃好，玩好！</span>",
       ],
-      bigLetters: "SO",
+      bigLetters: "开整",
     },
     {
       type: "quote",
-      text: "The more you praise and celebrate your life, the more there is in life to celebrate.",
-      author: "Oprah Winfrey",
-    },
-    {
-      type: "stars",
-      count: 40,
+      text:
+        "今天的主要矛盾：蛋糕有限，兄弟的胃口无限。",
+      author: "生日特别议题",
     },
     {
       type: "balloons",
-      count: 25,
+      count: 18,
     },
     {
       type: "profile",
-      wishTitle: "Happy Birthday!",
-      wishText: "May the js.prototypes always be with you! ;)",
+      wishTitle: "生日快乐，溜溜！",
+      wishText:
+        "愿你看球常有欢呼，排位常有好队友，读书常有新收获。顺风一起冲，逆风一起扛。",
     },
     {
       type: "fireworks",
@@ -112,8 +87,8 @@ const CONFIG = {
     },
     {
       type: "closing",
-      text: "Okay, now come back and tell me if you liked it.",
-      replayText: "Or click, if you want to watch it again.",
+      text: "祝福送到，兄弟情不多说。下次见面，一起吃顿好的！",
+      replayText: "再来一遍，重返生日主场 →",
     },
   ],
 };

@@ -3,52 +3,95 @@
 
   window.Components.profile = {
     render(container, section, config) {
-      const div = document.createElement("div");
-      div.className = "section section-profile";
-      div.innerHTML = `
-        <div class="profile-wrapper">
-          <img src="${config.photo}" alt="profile" class="profile-picture" />
-        </div>
-        <div class="wish">
-          <h3 class="wish-hbd">${section.wishTitle || "Happy Birthday!"}</h3>
-          <h5 class="wish-text">${section.wishText || ""}</h5>
-        </div>
-      `;
-      // Split wish title into spans for stagger animation
-      const hbd = div.querySelector(".wish-hbd");
-      hbd.innerHTML = hbd.textContent
-        .split("")
-        .map((ch) => `<span>${ch}</span>`)
-        .join("");
+      const page = document.createElement("div");
+      page.className = "section section-profile";
+      page.style.visibility = "hidden";
 
-      container.appendChild(div);
-      return div;
+      // 固定展示区域，横图竖图都完整显示。
+      const stage = document.createElement("div");
+      stage.style.cssText = `
+        position: relative;
+        width: min(80vw, 340px);
+        height: min(45vh, 360px);
+        flex-shrink: 0;
+      `;
+
+      const paths = config.photos && config.photos.length
+        ? config.photos
+        : [config.photo];
+
+      paths.forEach(function (path, index) {
+        const photo = document.createElement("img");
+        photo.src = path;
+        photo.alt = "溜溜的照片 " + (index + 1);
+        photo.className = "birthday-slide";
+        photo.style.cssText = `
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 12px;
+          opacity: 0;
+        `;
+        stage.appendChild(photo);
+      });
+
+      const wish = document.createElement("div");
+      wish.className = "wish";
+
+      const title = document.createElement("h3");
+      title.className = "wish-hbd";
+      title.textContent = section.wishTitle || "生日快乐！";
+      title.style.color = "var(--primary)";
+
+      const message = document.createElement("h5");
+      message.className = "wish-text";
+      message.textContent = section.wishText || "";
+
+      wish.append(title, message);
+      page.append(stage, wish);
+      container.appendChild(page);
+      return page;
     },
 
     animate(tl, el) {
-      // Photo appears with gentle scale
-      tl.from(el.querySelector(".profile-picture"), {
-        duration: 0.8, scale: 0.5, opacity: 0, ease: "back.out(1.4)",
-      }, "-=2")
-      // Wish title letters stagger in
-      .from(el.querySelectorAll(".wish-hbd span"), {
-        duration: 0.5, opacity: 0, y: -30,
-        ease: "back.out(1.7)", stagger: 0.06,
-      })
-      // Color each letter
-      .to(el.querySelectorAll(".wish-hbd span"), {
-        color: "var(--primary)", duration: 0.4,
-        stagger: 0.04, ease: "none",
-      }, "-=0.3")
-      // Wish text fades in
-      .from(el.querySelector(".wish-text"), {
-        duration: 0.5, opacity: 0, y: 10,
-      }, "-=0.2");
+      const photos = el.querySelectorAll(".birthday-slide");
+      const wish = el.querySelector(".wish");
+
+      // 重播时也从第一张开始。
+      tl.set(el, { autoAlpha: 1, y: 0 });
+      tl.set(photos, { opacity: 0 });
+
+      tl.fromTo(
+        wish,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5 }
+      );
+
+      photos.forEach(function (photo, index) {
+        // 照片淡入。
+        tl.fromTo(
+          photo,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4 }
+        );
+
+        // 完整展示两秒。
+        tl.to({}, { duration: 2 });
+
+        // 最后一张保留，陪伴后续烟花动画。
+        if (index < photos.length - 1) {
+          tl.to(photo, { opacity: 0, duration: 0.3 });
+        }
+      });
     },
 
     exit(tl, el) {
       tl.to(el, {
-        duration: 0.6, opacity: 0, y: 20,
+        autoAlpha: 0,
+        y: 20,
+        duration: 0.6,
       });
     },
   };

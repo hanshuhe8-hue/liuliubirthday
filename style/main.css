@@ -479,3 +479,13 @@ body {
 .swal2-popup {
   border-radius: 16px !important;
 }
+/* 完整显示生日照片，不裁切 */
+.section-profile .profile-picture {
+  width: auto;
+  height: auto;
+  max-width: 80vw;
+  max-height: 45vh;
+  object-fit: contain;
+  border-radius: 12px;
+  margin: 0 auto;
+}
